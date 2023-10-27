@@ -174,6 +174,7 @@ class VariableEditor extends React.PureComponent {
         if (this.props.onEdit !== false) {
             const stringifiedValue = stringifyVariable(variable.value);
             const detected = parseInput(stringifiedValue);
+            console.log(detected, stringifiedValue);
             this.setState({
                 editMode: true,
                 editValue: stringifiedValue,
