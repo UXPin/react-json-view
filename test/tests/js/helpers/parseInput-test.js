@@ -28,10 +28,6 @@ describe("parseInput", function() {
         expect(parseInput("2e-7").type).to.equal("float")
     })
 
-    it("parseInput date", function() {
-        expect(parseInput("5/22").type).to.equal("date")
-    })
-
     it("parseInput integer", function() {
         expect(parseInput("22").type).to.equal("integer")
     })

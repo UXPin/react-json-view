@@ -8,6 +8,9 @@ import Theme from './../../themes/getStyle';
 //attribute store for storing collapsed state
 import AttributeStore from './../../stores/ObjectAttributes';
 
+import { parseJSX } from './../../helpers/parseJSX';
+
+
 export default class extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -56,6 +59,23 @@ export default class extends React.PureComponent {
                     </span>
                 );
             }
+        }
+
+
+        const match = parseJSX(value);
+        if (match !== false) {
+            return (
+                <div {...Theme(theme, 'string')}>
+                    <DataTypeLabel type_name={type_name} {...props} />
+                    <span
+                        class="string-value"
+                        {...style}
+                        onClick={this.toggleCollapsed}
+                    >
+                    {match}
+                </span>
+                </div>
+            );
         }
 
         return (

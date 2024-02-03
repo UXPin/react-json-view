@@ -1,7 +1,7 @@
 import React from 'react';
 import AutosizeTextarea from 'react-textarea-autosize';
 
-import { toType } from './../helpers/util';
+import { parseJSX } from './../helpers/parseJSX';
 import dispatcher from './../helpers/dispatcher';
 import parseInput from './../helpers/parseInput';
 import stringifyVariable from './../helpers/stringifyVariable';
@@ -174,13 +174,13 @@ class VariableEditor extends React.PureComponent {
         if (this.props.onEdit !== false) {
             const stringifiedValue = stringifyVariable(variable.value);
             const detected = parseInput(stringifiedValue);
-            console.log(detected, stringifiedValue);
+            const jsxValue = parseJSX(stringifiedValue);
             this.setState({
                 editMode: true,
-                editValue: stringifiedValue,
+                editValue: jsxValue !== false ? jsxValue : stringifiedValue,
                 parsedInput: {
                     type: detected.type,
-                    value: detected.value
+                    value: jsxValue !== false ? jsxValue : detected.value
                 }
             });
         }
@@ -328,6 +328,11 @@ class VariableEditor extends React.PureComponent {
         this.setState({
             editMode: false
         });
+
+        if (/^<(.*)\/?>$/gs.test(new_value))  {
+            new_value = `R$${new_value}$R`
+        }
+
         dispatcher.dispatch({
             name: 'VARIABLE_UPDATED',
             rjvId: rjvId,

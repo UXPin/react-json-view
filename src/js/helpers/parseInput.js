@@ -5,7 +5,6 @@ export default function parseInput(input) {
     //we are working with a serialized data representation
     input = input.trim();
     try {
-        console.log('pipka',input);
         input = JSON.stringify(JSON.parse(input));
         if (input[0] === '[') {
             //array
@@ -39,7 +38,6 @@ export default function parseInput(input) {
             return formatResponse('integer', Number(input));
         }
     } catch (e) {
-        console.log(e);
         // no-op
     }
 
